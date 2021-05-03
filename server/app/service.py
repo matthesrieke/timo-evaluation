@@ -1,5 +1,6 @@
 import papermill as pm
 from papermill.exceptions import PapermillExecutionError
+import uuid
 
 import pathlib
 import datetime
@@ -9,8 +10,23 @@ def create_evaluation(start, end, sessionId):
     
     try:
         pm.execute_notebook(
-            '/home/jovyan/nb.ipynb',
-            '/tmp/output.ipynb',
+            '/home/jovyan/allprojects.ipynb',
+            '/tmp/output_%s.ipynb' % uuid.uuid4(),
+            parameters = dict(start_date=start, end_date=end, JSESSIONID=sessionId, output=out_file)
+        )
+    except PapermillExecutionError as e:
+        raise ValueError(e)
+
+    return out_file
+
+
+def create_performance_record(start, end, sessionId):
+    out_file = "/tmp/%s_%s.xlsx" % (start, end)
+    
+    try:
+        pm.execute_notebook(
+            '/home/jovyan/performance_record.ipynb',
+            '/tmp/output_%s.ipynb' % uuid.uuid4(),
             parameters = dict(start_date=start, end_date=end, JSESSIONID=sessionId, output=out_file)
         )
     except PapermillExecutionError as e:

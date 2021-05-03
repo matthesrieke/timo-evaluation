@@ -5,7 +5,8 @@ RUN pip install -r /var/www/requirements.txt
 
 RUN python -m ipykernel install --user
 
-ADD ./jupyter/Timo-Evaluation.ipynb /home/jovyan/nb.ipynb
+ADD ./jupyter/Timo-Evaluation.ipynb /home/jovyan/allprojects.ipynb
+ADD ./jupyter/Timo-Leistungsnachweis.ipynb /home/jovyan/performance_record.ipynb
 
 # ENV STATIC_URL /static
 # ENV STATIC_PATH /var/www/app/static
